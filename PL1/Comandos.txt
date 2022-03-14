@@ -1,0 +1,40 @@
+int e
+ip address 192.168.{x}.254 255.255.255.0
+no shutdown
+
+============1====================================
+service dhcp
+ip dhcp pool GRUPO-{N}
+network 192.168.{x}.0 255.255.255.0
+default-router 192.168.{x}.254
+exit
+ip dhcp excl<tab> 192.168.{x}.1 192.168.{x}.31
+ip dhcp exc<tab>  192.168.{x}.224 192.168.{x}.254
+///
+Mais algumas coisas no pc ipconfig/qqcoisa
+================================================
+
+===========2============================
+ip dhcp pool GRUPO-{N}
+dns-server 192.168.{x}.31 10.254.0.252
+domain-name net-{N}.dei.uc.pt
+netbios-name-server 10.1.0.253
+=====================================
+
+================3====================
+lease 0 0 2 (?)
+>renovar pc
+>ver novamente--show ip dhcp bindings
+debug ip dhcp server event
+debug ip dhcp server packet
+show ip dhcp server statistics
+==============================
+
+===============4==================
+ip dhcp pool <OUTRO-NOME(?)>
+host 192.168.{x}.30 255.255.255.0
+client-identifier 01<mac>
+end
+show ip dhcp binding
+clear ip dhcp binding *
+>renovar pc
