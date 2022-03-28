@@ -1,0 +1,41 @@
+#### Ligar o cabo ao router ####
+
+access-list 25 permit 192.168.{X}.0 0.0.0.255
+ip nat inside source list 25 int e0 overload
+int e0
+ip address 192.168.{X}.254 255.255.255.0
+ip nat inside
+no shutdown
+exit
+
+int f1/0
+ip address 10.254.0.{N}
+no shutdown
+end
+
+#### MUDAR IP DO PC PARA 192.168.{X}.100 #### 
+
+ping pc -- server (=10.254.0.254);
+
+
+==========================
+=====Exercicio 2==========
+==========================
+
+conf t
+access-list 25 deny 192.168.{X}.200 0.0.0.0
+ip nat inside source static 192.168.{X}.200 10.254.0.{N * 16 + 1}
+ip nat pool net-TESTE 10.254.0.{N * 16 + 2} 10.254.0.{N * 16 + 5} netmask 255.255.255.0
+ip nat inside source list 25 pool net-TESTE overload
+access-list 25 permit 192.168.{X}.0 0.0.0.255
+
+#### Configurar pc com ip estático (192.168.{X}.200) e fazer ping ####
+#### Configurar pc com ip diferente do estático e fazer ping ####
+
+
+==========================
+=====Exercicio 3==========
+==========================
+
+
+???---vê se amanhã
