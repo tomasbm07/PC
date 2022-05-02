@@ -1,0 +1,114 @@
+
+
+
+============Exercicio 1================
+
+R0
+#conf t
+#router ospf {integer}
+#network 172.16.{x+1}.0 0.0.0.255 area 0
+#network 172.16.{x+2}.0 0.0.0.255 area 0
+#exit
+#int {fast}
+#ip address 172.16.{x+1}.254 255.255.255.0
+#no shutdown
+#exit
+#int {ether}
+#ip address 172.16.{x+2}.254 255.255.255.0
+#no shutdown
+#end
+
+R1
+#conf t
+#router ospf {integer}
+#network 192.168.{x+1}.0 0.0.0.255 area 1
+#network 172.16.{x+1}.0 0.0.0.255 area 0
+#exit
+#int {fast}
+#ip address 172.16.{x+1}.253 255.255.255.0
+#no shutdown
+#exit
+#int {ether}
+#ip address 192.168.{x+1}.254 255.255.255.0
+#no shutdown
+#end
+
+R2
+#conf t
+#router ospf {integer}
+#network 192.168.{x+2}.0 0.0.0.255 area 2
+#network 172.16.{x+2}.0 0.0.0.255 area 0
+#exit
+#int {fast}
+#ip address 172.16.{x+2}.253 255.255.255.0
+#no shutdown
+#exit
+#int {ether}
+#ip address 192.168.{x+2}.254 255.255.255.0
+#no shutdown
+#end
+
+
+>pings
+>show ip route
+>show ip ospf neighbor
+
+
+=============Exercicio 2=======================
+
+R1
+#conf t
+#router ospf {integer}
+#network 172.16.{x+1}.0 0.0.0.255 area 0
+#exit
+#int {fast}
+#ip address 172.16.{x+1}.254 255.255.255.0
+#no shutdown
+#end
+
+R2
+#conf t
+#router ospf {integer}
+#network 172.16.{x+1}.0 0.0.0.255 area 0
+#network 192.168.{x+1}.0 0.0.0.255 area 1
+#area 1 nssa
+#exit
+#int {fast}
+#ip address 172.16.{x+1}.253 255.255.255.0
+#no shutdown
+#exit
+#int {ether}
+#ip address 192.168.{x+1}.254 255.255.255.0
+#no shutdown
+#end
+
+R3
+#conf t
+#router rip
+#network 192.168.12.0
+#exit
+#router ospf {integer}
+#redistribute rip subnets
+#network 192.168.11.0 0.0.0.255 area 1
+#area 1 nssa
+#exit
+#int {fast}
+#ip address 192.168.11.253 255.255.255.0
+#no shutdown
+#exit
+#int {ether}
+#ip address 192.168.12.254 255.255.255.0
+#no shutdown
+#end
+
+>show ip route
+>check routes
+>ping
+
+
+
+
+
+
+
+
