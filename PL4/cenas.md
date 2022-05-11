@@ -3,39 +3,39 @@
 ## Exercise 1
 
 R0 - R1:
-172.16.(X + 1).0/24
+172.16.25.254/24
 
 R0 - R2:
-172.16.(X + 2).0/24
+172.16.26.1/24
 
 R1:
-192.168.(X + 1).0/24
+192.168.25.1/24
 
 R2:
-192.168.(X + 2).0/24
+192.168.26.253/24
 
 *R0 router:*
 
 ```bash
 router ospf 100
-network 172.16.(X + 1).0 255.255.255.0 area 0
-network 172.16.(X + 2).0 255.255.255.0 area 0
+network 172.16.25.0 0.0.0.255 area 0
+network 172.16.26.0 0.0.0.255 area 0
 ```
 
 *R1 router:*
 
 ```bash
 router ospf 100
-network 172.16.(X + 1).0 255.255.255.0 area 0
-network 192.168.(X + 1).0 255.255.255.0 area 1
+network 172.16.25.0 0.0.0.255 area 0
+network 192.168.25.0 0.0.0.255 area 1
 ```
 
 *R2 router:*
 
 ```bash
 router ospf 100
-network 172.16.(X + 2).0 255.255.255.0 area 0
-network 192.168.(X + 2).0 255.255.255.0 area 2
+network 172.16.26.0 0.0.0.255 area 0
+network 192.168.26.0 0.0.0.255 area 2
 ```
 
 - Get routing table with `show ip route` in all routers
@@ -46,11 +46,13 @@ network 192.168.(X + 2).0 255.255.255.0 area 2
 
 - Set up the scenario
 
+*R0 router:*
+ip address 172.16.25.1 255.255.255.0
+
 *R1 router:*
-__not sure__
 router ospf 100
-network 172.16.(X + 1).0 255.255.255.0 area 0
-network 192.168.51.0 255.255.255.0 area 1
+network 172.16.25.0 0.0.0.255 area 0
+network 192.168.51.0 0.0.0.255 area 1
 area 1 nssa
 
 - Get the routing tables of the R0 router, of the ABR router in the NSSA area, of the RIP router in the NSSA area, and of the ABR router in the standard area, using the `show ip route` command in each of these router
